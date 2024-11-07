@@ -59,29 +59,36 @@ public class MainInit {
     // ORDER INIT
     
     public void addOrder() throws IOException{
-        System.out.print("Enter item name: ");
-        String order_item_name = sc_input.readLine();
+        System.out.print("Enter customer name: ");
+        String order_customer_name = sc_input.readLine();
+        viewItems();
         
-        System.out.print("Enter item price: ");
-        double order_item_price = Double.parseDouble(sc_input.readLine());
+        
+        System.out.print("Enter item id: ");
+        int order_item_id = Integer.parseInt(sc_input.readLine());
         
         System.out.print("Enter quantity: ");
         int order_quantity = Integer.parseInt(sc_input.readLine());
         
-        System.out.print("Enter customer name: ");
-        String order_customer_name = sc_input.readLine();
+        System.out.print("Enter date: ");
+        String order_date = sc_input.readLine();
         
+        String sql = "SELECT item_price FROM inventory_tbl WHERE item_id = ?";
+        
+        double order_item_price = config_init.getSingleValue(sql, order_item_id);
+    
+     
         double new_order_total = order_item_price * order_quantity;
         
-        String sql = "INSERT INTO orders_tbl (order_item_name, order_item_price, order_quantity, order_customer_name, order_total) VALUES (?, ?, ?, ?, ?)";
+        sql = "INSERT INTO orders_tbl (item_id, order_customer_name, order_quantity, order_total, order_date) VALUES (?, ?, ?, ?, ?)";
         
-        config_init.addRecord(sql, order_item_name, order_item_price, order_quantity, order_customer_name, new_order_total);
+        config_init.addRecord(sql, order_customer_name, order_item_id, order_quantity, new_order_total, order_date);
     }
     
     public void viewOrders(){
         String orderQuery = "SELECT * FROM orders_tbl";
-        String[] orderHeaders = {"ID", "Item Name", "Item Price", "Item Quantity", "Customer ID", "Customer Name", "Total Price"};
-        String[] orderColumns = {"order_id", "order_item_name", "order_item_price", "order_quantity", "order_customer_id", "order_customer_name", "order_total"};
+        String[] orderHeaders = {"Order ID", "Item ID", "Customer Name", "Quantity", "Total", "Date"};
+        String[] orderColumns = {"order_id", "item_id", "order_customer_name", "order_quantity", "order_total", "order_date"};
 
         config_init.viewRecords(orderQuery, orderHeaders, orderColumns);
     }
@@ -114,7 +121,7 @@ public class MainInit {
         System.out.print("Enter ID delete: ");
         int delete_id = Integer.parseInt(sc_input.readLine());
         
-        String sqlDelete = "DELETE FROM orders_tbl WHERE item_id = ?";
+        String sqlDelete = "DELETE FROM orders_tbl WHERE order_id = ?";
         config_init.deleteRecord(sqlDelete, delete_id);
     }
     

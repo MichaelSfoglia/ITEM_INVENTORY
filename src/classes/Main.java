@@ -28,39 +28,48 @@ public class Main {
             option = Integer.parseInt(sc_input.readLine());
             
             switch(option){
-                case 1 -> {
+                case 1:
                     main_init.addItem();
-                }
-                case 2 -> {
+                    break;
+                    
+                case 2:
                     main_init.viewItems();
-                }
-                case 3 -> {
+                    break;
+                    
+                case 3:
                     main_init.updateItem();
-                }
-                case 4 -> {
+                    break;
+                    
+                case 4:
                     main_init.deleteItem();
-                }
-                case 5 -> {
+                    break;
+                    
+                case 5:
                     main_init.addOrder();
-                }
-                case 6 -> {
+                    break;
+                    
+                case 6:
                     main_init.viewOrders();
-                }
-                case 7 -> {
+                    break;
+                    
+                case 7:
                     main_init.updateOrder();
-                }
-                case 8 -> {
+                    break;
+                    
+                case 8:
                     main_init.deleteOrder();
-                }
-                case 9 -> {
+                    break;
+                    
+                case 9:
                     main_init.viewAll();
-                }
-                case 10 -> {
+                    break;
+                    
+                case 10:
                     System.out.println("Program exited.");
-                }
-                default -> {
+                    break;
+                
+                default:
                     System.out.println("Invalid option.");
-                }
             }
         }while(option != 10);
     }
