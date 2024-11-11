@@ -56,13 +56,14 @@ public class MainInit {
         config_init.deleteRecord(sqlDelete, delete_id);
     }
     
+    // -------------------------------------------------------------------------------------------------------------------------------
     // ORDER INIT
+    // -------------------------------------------------------------------------------------------------------------------------------
     
     public void addOrder() throws IOException{
         System.out.print("Enter customer name: ");
         String order_customer_name = sc_input.readLine();
         viewItems();
-        
         
         System.out.print("Enter item id: ");
         int order_item_id = Integer.parseInt(sc_input.readLine());
@@ -76,8 +77,6 @@ public class MainInit {
         String sql = "SELECT item_price FROM inventory_tbl WHERE item_id = ?";
         
         double order_item_price = config_init.getSingleValue(sql, order_item_id);
-    
-     
         double new_order_total = order_item_price * order_quantity;
         
         sql = "INSERT INTO orders_tbl (item_id, order_customer_name, order_quantity, order_total, order_date) VALUES (?, ?, ?, ?, ?)";
@@ -95,26 +94,25 @@ public class MainInit {
     
     public void updateOrder() throws IOException{
         System.out.print("Enter Order ID to update: ");
-        int update_id = Integer.parseInt(sc_input.readLine());
+        int order_update_id = Integer.parseInt(sc_input.readLine());
         
-        System.out.print("Enter new item name: ");
-        String new_item_name = sc_input.readLine();
-        
-        System.out.print("Enter item price: ");
-        double new_order_item_price = Double.parseDouble(sc_input.readLine());
+        System.out.print("Enter customer name: ");
+        String new_customer_name = sc_input.readLine();
         
         System.out.print("Enter quantity: ");
         int new_order_quantity = Integer.parseInt(sc_input.readLine());
         
-        System.out.print("Update customer name?: ");
-        String new_customer_name = sc_input.readLine();
+        System.out.print("Enter date: ");
+        String new_order_date = sc_input.readLine();
+        
+        String sql = "SELECT item_price FROM inventory_tbl WHERE item_id = ?";
+        
+        double new_order_item_price = config_init.getSingleValue(sql, order_update_id);
         
         double new_order_total = new_order_item_price * new_order_quantity;
 
-        String sqlUpdate = "UPDATE orders_tbl SET order_item_name = ?, order_item_price = ?, order_quantity = ?, "
-                + "order_customer_name = ?, order_total = ? WHERE order_id = ?";
-        config_init.updateRecord(sqlUpdate, new_item_name, new_order_item_price, new_order_quantity, 
-                new_customer_name, new_order_total, update_id);
+        String sqlUpdate = "UPDATE orders_tbl SET order_customer_name = ?, order_quantity = ?, order_total = ?, order_date = ? WHERE order_id = ?";
+        config_init.updateRecord(sqlUpdate, new_customer_name, new_order_quantity, new_order_total, new_order_date, order_update_id);
     }
     
     public void deleteOrder() throws IOException{
