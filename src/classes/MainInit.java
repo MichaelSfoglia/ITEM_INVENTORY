@@ -81,7 +81,7 @@ public class MainInit {
         
         sql = "INSERT INTO orders_tbl (item_id, order_customer_name, order_quantity, order_total, order_date) VALUES (?, ?, ?, ?, ?)";
         
-        config_init.addRecord(sql, order_customer_name, order_item_id, order_quantity, new_order_total, order_date);
+        config_init.addRecord(sql, order_item_id, order_customer_name, order_quantity, new_order_total, order_date);
     }
     
     public void viewOrders(){
